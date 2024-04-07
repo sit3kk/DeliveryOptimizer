@@ -2,6 +2,9 @@ package com.ocado.basket.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import java.io.FileReader;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Map;
 import java.util.List;
@@ -22,10 +25,11 @@ public class JsonUtils {
 
     // Method for loading an object from JSON contained in a file
     public static <T> T readJsonFromFile(String filePath, Class<T> classOfT) {
-        try (java.io.FileReader reader = new java.io.FileReader(filePath)) {
+        try (FileReader reader = new FileReader(filePath)) { // 'filePath' should be a string path
             return gson.fromJson(reader, classOfT);
-        } catch (Exception e) {
+        } catch (IOException e) {
             throw new RuntimeException("Failed to read JSON from file: " + filePath, e);
         }
     }
+
 }
